@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
     $db->set_charset("utf8");
 
     $isExistFile = false;
-    if (isset($_FILES['image'])) {
+    if (isset($_FILES['image']) && $_FILES['image']['name'] != null) {
         //var_dump($_FILES['image']);
         $fileName = $_FILES['image']['name'];
         $fileName = time() . str_replace(' ', '_', $fileName);
