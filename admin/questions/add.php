@@ -16,6 +16,23 @@ if (isset($_POST['submit'])) {
     $query = 'insert into questions(title,content,id_package) 
         values("' . $title . '","' . $content . '",' . $id_package . ')';
     mysqli_query($db, $query) or die("Cannot insert data");
+
+    $last_insert_id = $db->insert_id;
+
+    $answers = $_POST['answers'];
+    $right_answer = $_POST['right_answer'];
+
+    for ($i = 0; $i < 4; $i++) {
+        $content = $answers[$i];
+        $is_correct = 0;
+        if ($i == $right_answer) {
+            $is_correct = 1;
+        }
+        $query = 'insert into answers(content,is_correct,id_question)
+         values("' . $content . '",' . $is_correct . ',' . $last_insert_id . ')';
+        mysqli_query($db, $query);
+    }
+    $query = 'insert into answers(content,is_correct,id_question) values()';
     $_SESSION['success'] = 'Thêm Câu hỏi thành công !!!!';
 }
 ?>
@@ -34,9 +51,9 @@ require_once('./../commons/head.php');
                 <?php
                 if (isset($_SESSION['success'])) {
                 ?>
-                <div class="alert alert-primary" role="alert">
-                    <?php echo $_SESSION['success'] ?>
-                </div>
+                    <div class="alert alert-primary" role="alert">
+                        <?php echo $_SESSION['success'] ?>
+                    </div>
                 <?php
                 }
                 ?>
@@ -59,7 +76,7 @@ require_once('./../commons/head.php');
                             if ($packages->num_rows > 0) {
                                 while ($row = $packages->fetch_assoc()) {
                             ?>
-                            <option value=" <?php echo $row['id'] ?>"><?php echo $row['name']; ?></option> ?></option>
+                                    <option value=" <?php echo $row['id'] ?>"><?php echo $row['name']; ?></option> ?></option>
 
                             <?php
                                 }
@@ -67,6 +84,33 @@ require_once('./../commons/head.php');
                             ?>
                         </select>
                     </div>
+
+                    <?php
+                    for ($i = 0; $i < 4; $i++) {
+                    ?>
+                        <div class="form-group">
+                            <label>Câu trả lời <?php echo $i + 1; ?></label>
+                            <input type="text" class="form-control" name="answers[]" />
+                        </div>
+                    <?php
+                    }
+                    ?>
+
+
+                    <div class="form-group">
+                        <label>Câu trả lời đúng</label>
+                        <?php
+                        for ($i = 0; $i < 4; $i++) {
+                        ?>
+                            <div>
+                                <label for=""><?php echo $i + 1; ?></label>
+                                <input type="radio" name="right_answer" value="<?php $i ?>" />
+                            </div>
+                        <?php
+                        }
+                        ?>
+                    </div>
+
 
                     <div class=" form-group">
                         <input type="submit" class="btn btn-primary" name="submit" value="Lưu">
