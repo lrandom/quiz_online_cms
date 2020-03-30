@@ -51,9 +51,9 @@ require_once('./../commons/head.php');
                 <?php
                 if (isset($_SESSION['success'])) {
                 ?>
-                    <div class="alert alert-primary" role="alert">
-                        <?php echo $_SESSION['success'] ?>
-                    </div>
+                <div class="alert alert-primary" role="alert">
+                    <?php echo $_SESSION['success'] ?>
+                </div>
                 <?php
                 }
                 ?>
@@ -76,7 +76,7 @@ require_once('./../commons/head.php');
                             if ($packages->num_rows > 0) {
                                 while ($row = $packages->fetch_assoc()) {
                             ?>
-                                    <option value=" <?php echo $row['id'] ?>"><?php echo $row['name']; ?></option> ?></option>
+                            <option value=" <?php echo $row['id'] ?>"><?php echo $row['name']; ?></option>
 
                             <?php
                                 }
@@ -88,10 +88,10 @@ require_once('./../commons/head.php');
                     <?php
                     for ($i = 0; $i < 4; $i++) {
                     ?>
-                        <div class="form-group">
-                            <label>Câu trả lời <?php echo $i + 1; ?></label>
-                            <input type="text" class="form-control" name="answers[]" />
-                        </div>
+                    <div class="form-group">
+                        <label>Câu trả lời <?php echo $i + 1; ?></label>
+                        <input type="text" class="form-control" name="answers[]" />
+                    </div>
                     <?php
                     }
                     ?>
@@ -102,10 +102,10 @@ require_once('./../commons/head.php');
                         <?php
                         for ($i = 0; $i < 4; $i++) {
                         ?>
-                            <div>
-                                <label for=""><?php echo $i + 1; ?></label>
-                                <input type="radio" name="right_answer" value="<?php $i ?>" />
-                            </div>
+                        <div>
+                            <label for=""><?php echo $i + 1; ?></label>
+                            <input type="radio" name="right_answer" value="<?php $i ?>" />
+                        </div>
                         <?php
                         }
                         ?>
