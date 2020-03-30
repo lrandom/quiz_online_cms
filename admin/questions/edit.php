@@ -4,8 +4,7 @@ session_start();
 require_once('./../../db.php');
 $db = new DB();
 $db = $db->getDB();
-$db->set_charset("utf8");
-
+mysqli_query($db, "SET NAMES utf8");
 
 if (isset($_SESSION['success'])) {
     unset($_SESSION['success']);
@@ -17,7 +16,7 @@ if (isset($_POST['submit'])) {
     $id_package = $_POST['id_package'];
 
     $query = 'update questions set title = "' . $title . '",
-     content = "' . $content . '", 
+    content = "' . $content . '", 
     id_package=' . $id_package . ' where id=' . $id;
     mysqli_query($db, $query) or die("Cannot update data");
 
@@ -58,44 +57,44 @@ require_once('./../commons/head.php');
                 <h5>Thêm gói</h5>
                 <?php
                 if (isset($_SESSION['success'])) {
-                ?>
+                    ?>
                     <div class="alert alert-primary" role="alert">
                         <?php echo $_SESSION['success'] ?>
                     </div>
-                <?php
+                    <?php
                 }
                 ?>
                 <form enctype="multipart/form-data" method="post">
                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>" />
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Tiêu đề câu hỏi<label>
-                                <input type="text" class="form-control" placeholder="Tiêu đề câu hỏi" name="title" value="<?php echo $row['title'];
-                                                                                                                            ?>">
-                    </div>
+                            <input type="text" class="form-control" placeholder="Tiêu đề câu hỏi" name="title" value="<?php echo $row['title'];
+                            ?>">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Nội dung</label>
-                        <textarea class="form-control" name="content" rows="3">
-                            <?php echo $row['content']; ?>
-                        </textarea>
-                    </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Nội dung</label>
+                            <textarea class="form-control" name="content" rows="3">
+                                <?php echo $row['content']; ?>
+                            </textarea>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect2">Gói</label>
-                        <select class="form-control" name="id_package">
-                            <?php
-                            $packages = mysqli_query($db, 'select * from question_packages');
-                            if ($packages->num_rows > 0) {
-                                while ($r = $packages->fetch_assoc()) {
-                            ?>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">Gói</label>
+                            <select class="form-control" name="id_package">
+                                <?php
+                                $packages = mysqli_query($db, 'select * from question_packages');
+                                if ($packages->num_rows > 0) {
+                                    while ($r = $packages->fetch_assoc()) {
+                                        ?>
 
-                                    <option <?php if ($row['id_package'] == $r['id']) {
-                                                echo 'selected="selected"';
-                                            } ?> value="<?php echo $r['id'] ?>">
+                                        <option <?php if ($row['id_package'] == $r['id']) {
+                                            echo 'selected="selected"';
+                                        } ?> value="<?php echo $r['id'] ?>">
                                         <?php echo $r['name']; ?>
                                     </option>
 
-                            <?php
+                                    <?php
                                 }
                             }
                             ?>
@@ -107,12 +106,12 @@ require_once('./../commons/head.php');
                     $i = 0;
                     while ($row = $answers->fetch_assoc()) {
                         $i++;
-                    ?>
+                        ?>
                         <div class="form-group">
                             <label>Câu trả lời <?php echo $i ?></label>
                             <input type="text" class="form-control" value="<?php echo $row['content'] ?>" name="answer_<?php echo $row['id'] ?>" />
                         </div>
-                    <?php
+                        <?php
                     }
                     ?>
 
@@ -120,14 +119,14 @@ require_once('./../commons/head.php');
                     $i = 0;
                     mysqli_data_seek($answers, 0);
                     while ($row = $answers->fetch_assoc()) {
-                    ?>
+                        ?>
                         <div>
                             <label for=""><?php echo $i + 1; ?></label>
                             <input type="radio" name="right_answer" <?php if ($row['is_correct'] == 1) {
-                                                                        echo 'checked="checked"';
-                                                                    } ?> value="<?php echo $row['id']; ?>" />
+                                echo 'checked="checked"';
+                            } ?> value="<?php echo $row['id']; ?>" />
                         </div>
-                    <?php
+                        <?php
                         $i++;
                     }
                     ?>

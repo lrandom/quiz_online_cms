@@ -7,7 +7,7 @@ require_once('./../../config.php');
 require_once('./../../db.php');
 $db = new DB();
 $db = $db->getDB();
-
+mysqli_query($db, "SET NAMES utf8");
 if (isset($_GET['action']) && $_GET['action'] == 'delete') {
     //xoa goi
     $id = $_GET['id'];
@@ -36,42 +36,42 @@ $query = mysqli_query($db, 'SELECT * FROM questions');
         <div class="row">
             <div style="margin-top:10px">
                 <a class="btn btn-primary" href="add.php">Thêm câu hỏi</a></div>
-            <br>
-            <br>
-            <br>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#id</th>
-                        <th scope="col">Tên</th>
-                        <th scope="col">Nội dung</th>
-                        <!-- <th scope="col">Ảnh đại diện</th> -->
-                        <th>Thao tác</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    if ($query->num_rows > 0) {
-                        while ($row = $query->fetch_assoc()) {
-                    ?>
-                    <tr>
-                        <td><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['title']; ?></td>
-                        <td><?php echo $row['content'] ?></td>
+                <br>
+                <br>
+                <br>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#id</th>
+                            <th scope="col">Tên</th>
+                            <th scope="col">Nội dung</th>
+                            <!-- <th scope="col">Ảnh đại diện</th> -->
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if ($query->num_rows > 0) {
+                            while ($row = $query->fetch_assoc()) {
+                                ?>
+                                <tr>
+                                    <td><?php echo $row['id']; ?></td>
+                                    <td><?php echo $row['title']; ?></td>
+                                    <td><?php echo $row['content'] ?></td>
 
-                        <td>
-                            <a class="btn btn-warning" href="edit.php?id=<?php echo $row['id']; ?>">Sửa</a>
-                            <a class="btn btn-danger" href="?action=delete&id=<?php echo $row['id']; ?>">Xoá</a>
-                        </td>
-                    </tr>
-                    <?php
+                                    <td>
+                                        <a class="btn btn-warning" href="edit.php?id=<?php echo $row['id']; ?>">Sửa</a>
+                                        <a class="btn btn-danger" href="?action=delete&id=<?php echo $row['id']; ?>">Xoá</a>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
                         }
-                    }
-                    ?>
-                </tbody>
-            </table>
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-</body>
+    </body>
 
-</html>
+    </html>
