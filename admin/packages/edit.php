@@ -5,8 +5,10 @@
 require_once('./../../config.php');
 require_once('./../commons/head.php');
 require_once('./../../db.php');
+require_once('./../auth.php');
 $db = new DB();
 $db = $db->getDB();
+mysqli_query($db, "SET NAMES utf8");
 if (isset($_POST['id'])) {
     $id = $_POST['id'];
     $name = $_POST['name'];
@@ -56,6 +58,9 @@ if (isset($_GET['id'])) {
 ?>
 
 <body>
+    <?php
+    require_once('./../commons/nav.php');
+    ?>
     <div class="container">
         <div class="row">
             <div class="col-md-12">

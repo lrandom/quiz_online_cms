@@ -5,9 +5,10 @@
 require_once('./../commons/head.php');
 require_once('./../../config.php');
 require_once('./../../db.php');
+require_once('./../auth.php');
 $db = new DB();
 $db = $db->getDB();
-
+mysqli_query($db, "SET NAMES utf8");
 if (isset($_GET['action']) && $_GET['action'] == 'delete') {
     //xoa goi
     $id = $_GET['id'];
@@ -32,6 +33,9 @@ $query = mysqli_query($db, 'SELECT * FROM question_packages');
 ?>
 
 <body>
+    <?php
+    require_once('./../commons/nav.php');
+    ?>
     <div class="container">
         <div class="row">
             <div style="margin-top:10px">

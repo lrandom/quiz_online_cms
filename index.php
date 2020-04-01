@@ -23,6 +23,8 @@ $packages = mysqli_query($db, $query);
 
 
 <body>
+    <?php require_once('./commons/nav.php') ?>
+    <br>
     <div class="container">
         <div class="row">
             <?php

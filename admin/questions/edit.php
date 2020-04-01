@@ -2,6 +2,7 @@
 session_start();
 
 require_once('./../../db.php');
+require_once('./../auth.php');
 $db = new DB();
 $db = $db->getDB();
 mysqli_query($db, "SET NAMES utf8");
@@ -51,50 +52,54 @@ require_once('./../commons/head.php');
 ?>
 
 <body>
+    <?php
+    require_once('./../commons/nav.php');
+    ?>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h5>Thêm gói</h5>
                 <?php
                 if (isset($_SESSION['success'])) {
-                    ?>
-                    <div class="alert alert-primary" role="alert">
-                        <?php echo $_SESSION['success'] ?>
-                    </div>
-                    <?php
+                ?>
+                <div class="alert alert-primary" role="alert">
+                    <?php echo $_SESSION['success'] ?>
+                </div>
+                <?php
                 }
                 ?>
                 <form enctype="multipart/form-data" method="post">
                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>" />
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Tiêu đề câu hỏi<label>
-                            <input type="text" class="form-control" placeholder="Tiêu đề câu hỏi" name="title" value="<?php echo $row['title'];
-                            ?>">
-                        </div>
+                                <input type="text" class="form-control" placeholder="Tiêu đề câu hỏi" name="title"
+                                    value="<?php echo $row['title'];
+                                                                                                                            ?>">
+                    </div>
 
-                        <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Nội dung</label>
-                            <textarea class="form-control" name="content" rows="3">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Nội dung</label>
+                        <textarea class="form-control" name="content" rows="3">
                                 <?php echo $row['content']; ?>
                             </textarea>
-                        </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label for="exampleFormControlSelect2">Gói</label>
-                            <select class="form-control" name="id_package">
-                                <?php
-                                $packages = mysqli_query($db, 'select * from question_packages');
-                                if ($packages->num_rows > 0) {
-                                    while ($r = $packages->fetch_assoc()) {
-                                        ?>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect2">Gói</label>
+                        <select class="form-control" name="id_package">
+                            <?php
+                            $packages = mysqli_query($db, 'select * from question_packages');
+                            if ($packages->num_rows > 0) {
+                                while ($r = $packages->fetch_assoc()) {
+                            ?>
 
-                                        <option <?php if ($row['id_package'] == $r['id']) {
-                                            echo 'selected="selected"';
-                                        } ?> value="<?php echo $r['id'] ?>">
-                                        <?php echo $r['name']; ?>
-                                    </option>
+                            <option <?php if ($row['id_package'] == $r['id']) {
+                                                echo 'selected="selected"';
+                                            } ?> value="<?php echo $r['id'] ?>">
+                                <?php echo $r['name']; ?>
+                            </option>
 
-                                    <?php
+                            <?php
                                 }
                             }
                             ?>
@@ -106,12 +111,13 @@ require_once('./../commons/head.php');
                     $i = 0;
                     while ($row = $answers->fetch_assoc()) {
                         $i++;
-                        ?>
-                        <div class="form-group">
-                            <label>Câu trả lời <?php echo $i ?></label>
-                            <input type="text" class="form-control" value="<?php echo $row['content'] ?>" name="answer_<?php echo $row['id'] ?>" />
-                        </div>
-                        <?php
+                    ?>
+                    <div class="form-group">
+                        <label>Câu trả lời <?php echo $i ?></label>
+                        <input type="text" class="form-control" value="<?php echo $row['content'] ?>"
+                            name="answer_<?php echo $row['id'] ?>" />
+                    </div>
+                    <?php
                     }
                     ?>
 
@@ -119,14 +125,14 @@ require_once('./../commons/head.php');
                     $i = 0;
                     mysqli_data_seek($answers, 0);
                     while ($row = $answers->fetch_assoc()) {
-                        ?>
-                        <div>
-                            <label for=""><?php echo $i + 1; ?></label>
-                            <input type="radio" name="right_answer" <?php if ($row['is_correct'] == 1) {
-                                echo 'checked="checked"';
-                            } ?> value="<?php echo $row['id']; ?>" />
-                        </div>
-                        <?php
+                    ?>
+                    <div>
+                        <label for=""><?php echo $i + 1; ?></label>
+                        <input type="radio" name="right_answer" <?php if ($row['is_correct'] == 1) {
+                                                                        echo 'checked="checked"';
+                                                                    } ?> value="<?php echo $row['id']; ?>" />
+                    </div>
+                    <?php
                         $i++;
                     }
                     ?>

@@ -46,7 +46,7 @@ require_once('./../commons/head.php');
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h5>Thêm gói</h5>
+                <h5>Thêm nguời dùng</h5>
                 <?php
                 if (isset($_SESSION['success'])) {
                 ?>
@@ -58,18 +58,27 @@ require_once('./../commons/head.php');
                 ?>
                 <form enctype="multipart/form-data" method="post">
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">Tên gói</label>
-                        <input type="text" class="form-control" placeholder="Tên gói" name="name">
+                        <label for="exampleFormControlInput1">Username</label>
+                        <input type="text" class="form-control" name="username">
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Mô tả</label>
-                        <textarea class="form-control" name="description" rows="3"></textarea>
+                        <label for="exampleFormControlInput1">Fullname</label>
+                        <input type="text" class="form-control" name="fullname">
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleFormControlSelect2">Ảnh đại diện</label>
-                        <input type="file" name="image">
+                        <label for="exampleFormControlInput1">Password</label>
+                        <input type="text" class="form-control" name="pwd">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Quyền</label>
+                        <select name="level">
+                            <option value="1">Admin</option>
+                            <option value="1">User</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
